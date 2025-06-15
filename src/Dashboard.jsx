@@ -5,7 +5,7 @@ function Dashboard() {
   const [message, setMessage] = useState('');
 
   useEffect(() => {
-    axios.get('http://13.48.244.216/api/message')
+    axios.get('http://13.48.244.216:5000/api/message')
       .then(res => setMessage(res.data.message))
       .catch(() => setMessage("Error fetching message"));
   }, []);
