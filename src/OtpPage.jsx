@@ -18,7 +18,7 @@ function OtpPage() {
     if (!user) return alert('User not logged in');
 
     try {
-      const res = await axios.get(`http://13.48.244.216:5000/api/users/role/${user.uid}`);
+      const res = await axios.get(`http://13.48.244.216/api/users/role/${user.uid}`);
       const role = res.data.role;
 
       if (role === 'admin') navigate('/admin');
