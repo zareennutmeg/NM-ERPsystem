@@ -38,8 +38,8 @@ app.get('/api/message', async (req, res) => {
 });
 
 // Route: Get user role from tppl DB
-app.get('/api/users/role/:uid', async (req, res) => {
-  const { uid } = req.params;
+app.get('/api/users/role/:user_id', async (req, res) => {
+  const { user_id } = req.params;
 
   try {
     const result = await pool2.query(
@@ -59,6 +59,6 @@ app.get('/api/users/role/:uid', async (req, res) => {
 });
 
 // Start the server
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`Server running on port ${PORT}`);
 });
