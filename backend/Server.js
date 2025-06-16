@@ -20,11 +20,15 @@ const pool1 = new pg.Pool({
 // Pool2: For `tppl` database (role_table)
 const pool2 = new pg.Pool({
   user: 'postgres',
-  host: '127.0.0.1',
+  host: '13.48.244.216',
   database: 'tppl',
-  password: 'postgres',
+  password: 'your_new_password',
   port: 5432,
+  ssl: {
+    rejectUnauthorized: false,
+  },
 });
+
 
 // Route: Get static message from myapp DB
 app.get('/api/message', async (req, res) => {
@@ -38,22 +42,20 @@ app.get('/api/message', async (req, res) => {
 });
 
 // Route: Get user role from tppl DB
-app.get('/api/users/role/:user_id', async (req, res) => {
-  const { user_id } = req.params;
-
+app.get('/api/users/role/:uid', async (req, res) => {
   try {
-    const result = await pool2.query(
-      'SELECT role_type FROM role_table WHERE user_id = $1',
-      [uid]
-    );
+    const { uid } = req.params;
+    console.log('Looking up role for user:', uid);
+
+    const result = await pool2.query('SELECT role_type FROM role_table WHERE user_id = $1', [uid]);
 
     if (result.rows.length === 0) {
-      return res.status(404).json({ error: 'User not found in role_table' });
+      return res.status(404).json({ error: 'User not found' });
     }
 
     res.json({ role: result.rows[0].role_type });
-  } catch (err) {
-    console.error('Error fetching role:', err);
+  } catch (error) {
+    console.error('DB query error:', error.stack || error);
     res.status(500).json({ error: 'Database error' });
   }
 });
