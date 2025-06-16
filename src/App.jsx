@@ -9,12 +9,13 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/otp" element={<OtpPage />} />
-        <Route path="/admin" element={<AdminDashboard />} />
-        <Route path="/member" element={<MemberDashboard />} />
-      </Routes>
+  <Route path="/" element={<Login />} />
+  <Route path="/otp" element={<OtpPage />} />
+  <Route path="/admin" element={<AdminDashboard />} />
+  <Route path="/member" element={<MemberDashboard />} />
+  <Route path="*" element={<h2>404 - Page not found</h2>} />
+</Routes>
+
     </Router>
   );
 }
