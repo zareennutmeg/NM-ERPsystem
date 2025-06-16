@@ -1,0 +1,29 @@
+/* MemberDashboard.css */
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f0f8ff;
+}
+
+.member-dashboard {
+  max-width: 900px;
+  margin: 60px auto;
+  padding: 2rem;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+  text-align: center;
+}
+
+.member-dashboard h1 {
+  font-size: 2rem;
+  color: #2c3e50;
+  margin-bottom: 1rem;
+}
+
+.member-dashboard p {
+  font-size: 1.1rem;
+  color: #555;
+}

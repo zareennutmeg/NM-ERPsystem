@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { auth } from './firebase';
 import axios from 'axios';
+import './OtpPage.css';
+
 
 function OtpPage() {
   const [otp, setOtp] = useState('');
