@@ -41,22 +41,38 @@ app.get('/api/message', async (req, res) => {
   }
 });
 
-// Route: Get user role from tppl DB
-app.get('/api/users/role/:uid', async (req, res) => {
+// Get user role using Firebase UID
+app.get('/api/users/role/:firebase_uid', async (req, res) => {
   try {
-    const { uid } = req.params;
-    console.log('Looking up role for user:', uid);
+    const { firebase_uid } = req.params;
+    console.log('Looking up internal ID for Firebase UID:', firebase_uid);
 
-    const result = await pool2.query('SELECT role_type FROM role_table WHERE user_id = $1', [uid]);
+    // First: lookup internal_user_id
+    const mappingResult = await pool2.query(
+      'SELECT internal_user_id FROM user_mapping WHERE firebase_uid = $1',
+      [firebase_uid]
+    );
 
-    if (result.rows.length === 0) {
-      return res.status(404).json({ error: 'User not found' });
+    if (mappingResult.rows.length === 0) {
+      return res.status(404).json({ error: 'User mapping not found' });
     }
 
-    res.json({ role: result.rows[0].role_type });
+    const internal_user_id = mappingResult.rows[0].internal_user_id;
+
+    // Second: lookup role
+    const roleResult = await pool2.query(
+      'SELECT role_type FROM role_table WHERE user_id = $1',
+      [internal_user_id]
+    );
+
+    if (roleResult.rows.length === 0) {
+      return res.status(404).json({ error: 'User role not found' });
+    }
+
+    res.json({ role: roleResult.rows[0].role_type });
   } catch (error) {
-    console.error('DB query error:', error.stack || error);
-    res.status(500).json({ error: 'Database error' });
+    console.error('Error:', error);
+    res.status(500).json({ error: 'Server error' });
   }
 });
 
