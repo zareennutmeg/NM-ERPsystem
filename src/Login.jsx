@@ -11,14 +11,15 @@ function Login() {
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
-    e.preventDefault();
-    try {
-      await signInWithEmailAndPassword(auth, email, password);
-      navigate('/otp'); // Go to OTP page
-    } catch (error) {
-      alert('Login failed: ' + error.message);
-    }
-  };
+  e.preventDefault();
+  try {
+    await signInWithEmailAndPassword(auth, email, password);
+    navigate('/otp');
+  } catch (error) {
+    console.error('Firebase Login Error:', error);
+    alert('Login failed: ' + error.message + '\nError Code: ' + error.code);
+  }
+};
 
   return (
     <form onSubmit={handleLogin}>
