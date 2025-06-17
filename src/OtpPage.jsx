@@ -7,7 +7,7 @@ import './OtpPage.css';
 
 function OtpPage() {
   const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState(null);
+  const [firebaseUid, setFirebaseUid] = useState(null);
   const [otp, setOtp] = useState('');
   const [otpVerified, setOtpVerified] = useState(false);
   const navigate = useNavigate();
@@ -15,7 +15,7 @@ function OtpPage() {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        setUser(user);
+        setFirebaseUid(user.uid);
       } else {
         navigate('/login');
       }
@@ -30,7 +30,12 @@ function OtpPage() {
       setOtpVerified(true);
 
       try {
-        const response = await axios.get(`http://13.48.244.216:5000/api/users/role/${user.uid}`);
+        if (!firebaseUid) {
+          alert("User UID not found");
+          return;
+        }
+
+        const response = await axios.get(`http://13.48.244.216:5000/api/users/role/${firebaseUid}`);
         const role = response.data.role;
 
         console.log('User role:', role);
