@@ -1,42 +1,52 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from './firebase';
 import axios from 'axios';
 import './OtpPage.css';
 
-
 function OtpPage() {
-  const [otp, setOtp] = useState('');
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  const handleOtpSubmit = async (e) => {
-    e.preventDefault();
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        const firebaseUid = user.uid;
+        console.log('Firebase UID:', firebaseUid);
 
-    if (otp !== '123456') {
-      return alert('Invalid OTP');
-    }
+        try {
+          const response = await axios.get(`http://13.48.244.216:5000/api/users/role/${firebaseUid}`);
+          const role = response.data.role;
 
-    const user = auth.currentUser;
-    if (!user) return alert('User not logged in');
+          console.log('User role:', role);
 
-    try {
-      const res = await axios.get(`http://13.48.244.216/api/users/role/${user.uid}`);
-      const role = res.data.role;
+          if (role === 'admin') {
+            navigate('/admin');
+          } else if (role === 'member') {
+            navigate('/member');
+          } else {
+            alert('Unknown role');
+          }
+        } catch (err) {
+          console.error(err);
+          alert('Error fetching user role');
+        }
+      } else {
+        navigate('/login');
+      }
+      setLoading(false);
+    });
 
-      if (role === 'admin') navigate('/admin');
-      else if (role === 'member') navigate('/member');
-      else navigate('/');
-    } catch (err) {
-      alert('Error fetching role: ' + err.message);
-    }
-  };
+    return () => unsubscribe();
+  }, [navigate]);
+
+  if (loading) return <div>Loading...</div>;
 
   return (
-    <form onSubmit={handleOtpSubmit}>
-      <h2>Enter OTP</h2>
-      <input value={otp} onChange={e => setOtp(e.target.value)} placeholder="Enter OTP" />
-      <button type="submit">Verify</button>
-    </form>
+    <div>
+      <h2>Verifying...</h2>
+    </div>
   );
 }
 
