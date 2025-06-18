@@ -10,8 +10,8 @@ const otpStore = {};  // In-memory OTP store (replace with Redis/DB in prod)
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: process.env.GMAIL_USER,
-    pass: process.env.GMAIL_APP_PASSWORD,
+    user: "zareen.hussaini@nmsolutions.co.in",
+    pass: "edmj booh yYaoeh nils"
   },
 });
 
