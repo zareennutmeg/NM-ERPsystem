@@ -3,33 +3,29 @@
 body {
   margin: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-.login-container {
+  background: linear-gradient(to bottom, #e0f2ff, #f0f9ff);
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  background: linear-gradient(to bottom, #f9fafb, #ffe8d6);
-  padding: 20px;
 }
 
-.login-card {
-  background: white;
-  padding: 40px;
+.login-container {
+  background: #ffffff;
+  padding: 40px 30px;
   border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  max-width: 400px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
   width: 100%;
+  max-width: 400px;
+  border-top: 5px solid #007bff;
   text-align: center;
-  border-top: 5px solid #c67f31; /* NutMeg color */
 }
 
 .title {
   font-size: 32px;
   font-weight: bold;
-  color: #c67f31;
-  margin-bottom: 8px;
+  color: #007bff;
+  margin-bottom: 10px;
 }
 
 .subtitle {
@@ -55,31 +51,36 @@ body {
 
 .form-group input {
   width: 100%;
-  padding: 10px;
+  padding: 12px;
   border: 1px solid #d1d5db;
-  border-radius: 6px;
+  border-radius: 8px;
   font-size: 16px;
+  outline: none;
+  transition: border 0.3s ease;
 }
 
+.form-group input:focus {
+  border-color: #007bff;
+}
 button {
   width: 100%;
-  padding: 12px;
-  background-color: #c67f31;
+  padding: 14px;
+  background-color: #007bff;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   color: white;
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
-  transition: 0.3s;
+  transition: background-color 0.3s ease;
 }
 
 button:hover {
-  background-color: #a56022;
+  background-color: #0056b3;
 }
 
 button:disabled {
-  background-color: #e0b89b;
+  background-color: #a0cfff;
   cursor: not-allowed;
 }
 
