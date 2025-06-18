@@ -1,12 +1,15 @@
 import express from 'express';
 import cors from 'cors';
 import pg from 'pg';
+import emailServiceRouter from './emailService.js';
 
 const app = express();
 const PORT = 5000;
 
 app.use(cors());
 app.use(express.json());
+// Mount email service routes at /api/email
+app.use('/api/email', emailServiceRouter);
 
 // Pool1: For `myapp` database (static_message)
 const pool1 = new pg.Pool({

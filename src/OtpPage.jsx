@@ -8,14 +8,16 @@ import './OtpPage.css';
 function OtpPage() {
   const [loading, setLoading] = useState(true);
   const [firebaseUid, setFirebaseUid] = useState(null);
+  const [email, setEmail] = useState('');
   const [otp, setOtp] = useState('');
-  const [otpVerified, setOtpVerified] = useState(false);
+  const [otpSent, setOtpSent] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setFirebaseUid(user.uid);
+        setEmail(user.email);
       } else {
         navigate('/login');
       }
@@ -24,21 +26,25 @@ function OtpPage() {
 
     return () => unsubscribe();
   }, [navigate]);
+  const sendOtp = async () => {
+    try {
+      await axios.post('http://13.48.244.216:5000/api/email/send-otp', { email });
+      alert('OTP sent to your email');
+      setOtpSent(true);
+    } catch (err) {
+      console.error(err);
+      alert('Failed to send OTP');
+    }
+  };
 
-  const handleOtpSubmit = async () => {
-    if (otp === '123456') {
-      setOtpVerified(true);
+const handleOtpSubmit = async () => {
+    try {
+      const verifyResponse = await axios.post('http://13.48.244.216:5000/api/email/verify-otp', { email, otp });
 
-      try {
-        if (!firebaseUid) {
-          alert("User UID not found");
-          return;
-        }
-
-        const response = await axios.get(`http://13.48.244.216:5000/api/users/role/${firebaseUid}`);
-        const role = response.data.role;
-
-        console.log('User role:', role);
+      if (verifyResponse.data.verified) {
+        // OTP verified, now get role
+        const roleResponse = await axios.get(`http://13.48.244.216:5000/api/users/role/${firebaseUid}`);
+        const role = roleResponse.data.role;
 
         if (role === 'admin') {
           navigate('/admin');
@@ -47,36 +53,35 @@ function OtpPage() {
         } else {
           alert('Unknown role');
         }
-      } catch (err) {
-        console.error(err);
-        alert('Error fetching user role');
+      } else {
+        alert('Invalid OTP');
       }
-
-    } else {
-      alert('Invalid OTP');
+    } catch (err) {
+      console.error(err);
+      alert('Error verifying OTP');
     }
   };
 
   if (loading) return <div>Loading...</div>;
 
-  if (!otpVerified) {
-    return (
-      <div>
-        <h2>Enter OTP</h2>
-        <input
-          type="text"
-          value={otp}
-          onChange={(e) => setOtp(e.target.value)}
-          placeholder="Enter OTP"
-        />
-        <button onClick={handleOtpSubmit}>Submit</button>
-      </div>
-    );
-  }
+  return (     
+  <div>
+      <h2>OTP Verification</h2>
+      <p>Email: {email}</p>
 
-  return (
-    <div>
-      <h2>Verifying role...</h2>
+      {!otpSent ? (
+        <button onClick={sendOtp}>Send OTP</button>
+      ) : (
+        <div>
+          <input
+            type="text"
+            value={otp}
+            onChange={(e) => setOtp(e.target.value)}
+            placeholder="Enter OTP"
+          />
+          <button onClick={handleOtpSubmit}>Verify OTP</button>
+        </div>
+      )}
     </div>
   );
 }
