@@ -64,24 +64,27 @@ const handleOtpSubmit = async () => {
 
   if (loading) return <div>Loading...</div>;
 
-  return (     
-  <div>
-      <h2>OTP Verification</h2>
-      <p>Email: {email}</p>
+  return (
+    <div className="otp-container">
+      <div className="otp-card">
+        <h2>OTP Verification</h2>
+        <p>Email: {email}</p>
 
-      {!otpSent ? (
-        <button onClick={sendOtp}>Send OTP</button>
-      ) : (
-        <div>
-          <input
-            type="text"
-            value={otp}
-            onChange={(e) => setOtp(e.target.value)}
-            placeholder="Enter OTP"
-          />
-          <button onClick={handleOtpSubmit}>Verify OTP</button>
-        </div>
-      )}
+        {!otpSent ? (
+          <button className="otp-button" onClick={sendOtp}>Send OTP</button>
+        ) : (
+          <div className="otp-input-section">
+            <input
+              type="text"
+              value={otp}
+              onChange={(e) => setOtp(e.target.value)}
+              placeholder="Enter OTP"
+              className="otp-input"
+            />
+            <button className="otp-button" onClick={handleOtpSubmit}>Verify OTP</button>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

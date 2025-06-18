@@ -1,53 +1,44 @@
 /* OtpPage.css */
-
-body {
-  margin: 0;
-  padding: 0;
-  background-color: #eef2f5;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+.otp-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f5f7fa;
 }
 
-form {
-  max-width: 400px;
-  margin: 100px auto;
-  padding: 2rem;
-  background-color: #ffffff;
+.otp-card {
+  background: white;
+  padding: 40px;
   border-radius: 10px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
   text-align: center;
+  width: 350px;
 }
 
-h2 {
-  color: #333;
-  margin-bottom: 1rem;
+.otp-input-section {
+  margin-top: 20px;
 }
 
-input {
+.otp-input {
+  padding: 10px;
   width: 100%;
-  padding: 0.75rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 15px;
   border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 1rem;
-  outline: none;
+  border-radius: 5px;
+  font-size: 16px;
 }
 
-input:focus {
-  border-color: #007bff;
-}
-
-button {
-  width: 100%;
-  padding: 0.75rem;
-  font-size: 1rem;
+.otp-button {
+  padding: 10px 20px;
   background-color: #007bff;
-  color: #ffffff;
+  color: white;
   border: none;
-  border-radius: 6px;
+  border-radius: 5px;
+  font-size: 16px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
 }
 
-button:hover {
+.otp-button:hover {
   background-color: #0056b3;
 }

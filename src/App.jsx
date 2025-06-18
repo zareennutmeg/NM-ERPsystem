@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './Login';
+import ForgotPassword from './ForgotPassword';
 import OtpPage from './OtpPage';
 import AdminDashboard from './components/AdminDashboard';
 import MemberDashboard from './components/MemberDashboard';
@@ -10,6 +11,7 @@ function App() {
     <Router>
       <Routes>
   <Route path="/" element={<Login />} />
+  <Route path="/forgot-password" element={<ForgotPassword />} />
   <Route path="/otp" element={<OtpPage />} />
   <Route path="/admin" element={<AdminDashboard />} />
   <Route path="/member" element={<MemberDashboard />} />
