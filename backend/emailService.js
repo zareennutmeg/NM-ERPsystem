@@ -29,10 +29,10 @@ router.post('/send-otp', async (req, res) => {
   otpStore[email] = otp;
 
   const mailOptions = {
-    from: process.env.GMAIL_USER,
+    from: "zareen.hussaini@nmsolutions.co.in",
     to: email,
     subject: 'Your OTP Verification Code',
-    text: `Your OTP is: ${otp}`,
+    text: `Your OTP is: ${otp}`
   };
 
   try {
