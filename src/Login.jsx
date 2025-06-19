@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useNavigate, Link } from 'react-router-dom';
 import { auth } from './firebase';
-import './Login.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -23,39 +23,56 @@ function Login() {
     setIsLoading(false);
   };
 
-  return (
-    <div className="login-container">
-      <div className="login-card">
-        <h1 className="title">NMERP System</h1>
-        <form onSubmit={handleLogin} className="form">
-          <div className="form-group">
-            <label>Email</label>
-            <input
-              type="email"
-              placeholder="name@nmsolutions.co.in"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
+return (
+    <div className="d-flex align-items-center justify-content-center vh-100" 
+         style={{ background: 'linear-gradient(to bottom right, #f5faff, #e0ecff)' }}>
+      <div className="card shadow-lg p-4" style={{ width: '100%', maxWidth: '400px', borderRadius: '15px' }}>
+        <div className="text-center mb-3">
+          <h3 className="fw-bold mb-0">NMERP SYSTEM</h3>
+                  </div>
+
+        <h5 className="mb-3 fw-semibold">Sign In</h5>
+        <p className="text-muted small mb-3">Please sign in with your NutMeg official email</p>
+
+        <form onSubmit={handleLogin}>
+          <div className="mb-3">
+            <label className="form-label">Email</label>
+            <input 
+              type="email" 
+              className="form-control" 
+              placeholder="name@nmsolutions.co.in" 
+              value={email} 
+              onChange={(e) => setEmail(e.target.value)} 
+              required 
             />
           </div>
-          <div className="form-group">
-            <label>Password</label>
-            <input
-              type="password"
-              placeholder="Enter Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
+
+          <div className="mb-2">
+            <label className="form-label">Password</label>
+            <input 
+              type="password" 
+              className="form-control" 
+              placeholder="Enter Password" 
+              value={password} 
+              onChange={(e) => setPassword(e.target.value)} 
+              required 
             />
           </div>
-          <button type="submit" disabled={isLoading}>
-            {isLoading ? 'Signing In...' : 'Sign In'}
-          </button>
+
+          <div className="text-end mb-3">
+            <Link to="/forgot-password" className="text-decoration-none">Forgot password?</Link>
+          </div>
+
+          <div className="d-grid mb-3">
+            <button type="submit" className="btn btn-primary" disabled={isLoading}>
+              {isLoading ? 'Signing In...' : 'Sign In'}
+            </button>
+          </div>
         </form>
-        <div className="forgot-password">
-          <Link to="/forgot-password">Forgot Password?</Link>
-        </div>
-        <p className="footer-text">Protected by Multi-Factor Authentication</p>
+
+        <p className="text-center text-muted small mb-0">
+          Protected by Multi-Factor Authentication
+        </p>
       </div>
     </div>
   );
