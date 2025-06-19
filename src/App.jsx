@@ -6,11 +6,7 @@ import ForgotPassword from './ForgotPassword';
 import OtpPage from './OtpPage';
 import AdminDashboard from './components/AdminDashboard';
 import MemberDashboard from './components/MemberDashboard';
-import Timesheet from './Timesheet';
-import Payroll from './Payroll';
-import Performance from './Performance';
-import Leave from './Leave';
-import MemberOnboard from './MemberOnboard';
+import MemberOnboarding from './MemberOnboarding';
 
 function App() {
   const [role, setRole] = useState(null);  // Role will be set after OTP verification
@@ -29,11 +25,7 @@ function App() {
           <Route path="/*" element={<Layout role={role} />}>
             {role === 'admin' && <Route path="admin" element={<AdminDashboard />} />}
             {role === 'member' && <Route path="member" element={<MemberDashboard />} />}
-            <Route path="memberonboard" element={<MemberOnboard />} />
-            <Route path="timesheet" element={<Timesheet />} />
-            <Route path="payroll" element={<Payroll />} />
-            <Route path="performance" element={<Performance />} />
-            <Route path="leave" element={<Leave />} />
+            <Route path="/onboard-desk" element={<MemberOnboarding />} />         
           </Route>
         ) : (
           <Route path="*" element={<Navigate to="/login" />} />
