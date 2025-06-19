@@ -14,8 +14,8 @@ const Layout = ({ role, children }) => {
   };
 
   const adminMenu = [
-    { path: "/admin-dashboard", label: "Dashboard" },
-    { path: "/memberonboard", label: "Onboard Desk" },
+    { path: "/admin", label: "Dashboard" },
+    { path: "/onboard-desk", label: "Onboard Desk" },
     { path: "/timesheet", label: "Timesheet" },
     { path: "/payroll", label: "Payroll" },
     { path: "/performance", label: "Performance" },
@@ -23,7 +23,7 @@ const Layout = ({ role, children }) => {
   ];
 
   const memberMenu = [
-    { path: "/member-dashboard", label: "Dashboard" },
+    { path: "/member", label: "Dashboard" },
     { path: "/timesheet", label: "Timesheet" },
     { path: "/leave", label: "Leave" }
   ];
