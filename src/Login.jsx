@@ -29,8 +29,7 @@ return (
       <div className="card shadow-lg p-4" style={{ width: '100%', maxWidth: '400px', borderRadius: '15px' }}>
         <div className="text-center mb-3">
           <h3 className="fw-bold mb-0">NMERP SYSTEM</h3>
-                  </div>
-
+           </div>
         <h5 className="mb-3 fw-semibold">Sign In</h5>
         <p className="text-muted small mb-3">Please sign in with your NutMeg official email</p>
 
