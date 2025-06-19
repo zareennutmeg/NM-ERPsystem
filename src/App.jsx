@@ -26,7 +26,7 @@ function App() {
           <Route path="/*" element={<Layout role={role} />}>
             {role === 'admin' && <Route path="admin" element={<AdminDashboard />} />}
             {role === 'member' && <Route path="member" element={<MemberDashboard />} />}
-            <Route path="/onboard-desk" element={<MemberOnboarding />} />         
+            <Route path="onboard-desk" element={<MemberOnboarding />} />         
           </Route>
         ) : (
           <Route path="*" element={<Navigate to="/login" />} />
