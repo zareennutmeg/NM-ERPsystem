@@ -56,5 +56,46 @@ router.post('/verify-otp', (req, res) => {
     res.status(400).json({ verified: false, error: 'Invalid OTP' });
   }
 });
+// === Onboard Member and Send Welcome Email ===
+router.post('/onboard-member', async (req, res) => {
+  const { name, email, designation, memberId } = req.body;
+
+  if (!name || !email || !designation || !memberId) {
+    return res.status(400).json({ error: 'All fields are required' });
+  }
+
+  try {
+    // Insert into database
+    await pool.query(
+      `INSERT INTO "TPPL"."TPPL_members" (member_id, name, email, designation)
+       VALUES ($1, $2, $3, $4)`,
+      [memberId, name, email, designation]
+    );
+
+    // Send onboarding email
+    const mailOptions = {
+      from: "zareen.hussaini@nmsolutions.co.in",
+      to: email,
+      subject: 'Welcome to Nutmeg Software Solutions!',
+      text: `Hello ${name},
+
+Welcome to Nutmeg Software Solutions! Your onboarding was successful.
+
+Here are your official details:
+
+Employee ID: ${memberId}
+Designation: ${designation}
+
+Regards,
+Team Nutmeg`
+    };
+
+    await transporter.sendMail(mailOptions);
+    res.status(200).json({ message: 'Member onboarded and email sent successfully' });
+  } catch (error) {
+    console.error('Error onboarding member:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
 
 export default router;
