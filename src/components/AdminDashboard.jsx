@@ -1,7 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { UserPlus } from "lucide-react"; 
 import './AdminDashboard.css';
+
+const adminModules = [
+  {
+    title: "OnBoardDesk",
+    description: "Manage new member registration and documents.",
+    icon: <UserPlus className="h-10 w-10 text-nutmeg-600" />,
+    link: "/admin/onboard-desk",
+    color: "bg-nutmeg-50",
+  }
+];
 
 function AdminDashboard() {
   const [message, setMessage] = useState('');
@@ -13,8 +24,8 @@ function AdminDashboard() {
       .catch(() => setMessage('Error fetching message'));
   }, []);
 
-  const handleOnboardClick = () => {
-    navigate('/admin/onboard-desk'); // adjust route based on your setup
+  const handleModuleClick = (link) => {
+    navigate(link);
   };
 
   return (
@@ -23,10 +34,18 @@ function AdminDashboard() {
       <p>{message}</p>
 
       <div className="tiles-container">
-        <div className="tile" onClick={handleOnboardClick}>
-          <h2>Onboard Desk</h2>
-          <p>Manage new member onboarding, document uploads, and verification.</p>
-        </div>
+        {adminModules.map(({ title, description, icon, link, color }) => (
+          <div
+            key={title}
+            className={`tile ${color}`}
+            onClick={() => handleModuleClick(link)}
+            style={{ cursor: "pointer" }}
+          >
+            <div className="icon-container">{icon}</div>
+            <h2>{title}</h2>
+            <p>{description}</p>
+          </div>
+        ))}
       </div>
     </div>
   );

@@ -94,7 +94,8 @@ const handleSubmit = async (e) => {
   e.preventDefault();
 
   try {
-    const dataToSend = { ...formData, firebase_uid: firebaseUid };
+    const dataToSend = { ...formData };
+
 
     if (editing && editId) {
       await axios.put(`${API_URL}/${editId}`, dataToSend, {

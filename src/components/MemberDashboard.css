@@ -1,29 +1,44 @@
-/* MemberDashboard.css */
-
-body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f0f8ff;
+.dashboard-container {
+  padding: 40px;
+  background: #f9fafb;
+  min-height: 100vh;
+  font-family: 'Arial', sans-serif;
 }
 
-.member-dashboard {
-  max-width: 900px;
-  margin: 60px auto;
-  padding: 2rem;
-  background-color: #ffffff;
+h1 {
+  font-size: 32px;
+  margin-bottom: 20px;
+}
+
+.tiles-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.tile {
+  background: white;
   border-radius: 12px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
-  text-align: center;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.member-dashboard h1 {
-  font-size: 2rem;
-  color: #2c3e50;
-  margin-bottom: 1rem;
+.tile:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.15);
 }
 
-.member-dashboard p {
-  font-size: 1.1rem;
+.icon-container {
+  margin-bottom: 15px;
+}
+
+.tile h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.tile p {
+  font-size: 14px;
   color: #555;
 }

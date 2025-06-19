@@ -1,13 +1,7 @@
-import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-const Layout = ({ role, children }) => {
+const Layout = ({ role, user, children }) => {
   const navigate = useNavigate();
-  const user = {
-  name: firebaseUser.displayName,   // Firebase user name
-  email: firebaseUser.email,        // Firebase user email
-  role: role,                       // role you fetched after login
-};
 
   const handleLogout = () => {
     navigate("/login");
@@ -15,17 +9,11 @@ const Layout = ({ role, children }) => {
 
   const adminMenu = [
     { path: "/admin", label: "Dashboard" },
-    { path: "/onboard-desk", label: "Onboard Desk" },
-    { path: "/timesheet", label: "Timesheet" },
-    { path: "/payroll", label: "Payroll" },
-    { path: "/performance", label: "Performance" },
-    { path: "/leave", label: "Leave" }
+    { path: "/onboard-desk", label: "Onboard Desk" }
   ];
 
   const memberMenu = [
     { path: "/member", label: "Dashboard" },
-    { path: "/timesheet", label: "Timesheet" },
-    { path: "/leave", label: "Leave" }
   ];
 
   const menu = role === "admin" ? adminMenu : memberMenu;
