@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useNavigate, Link } from 'react-router-dom';
 import { auth } from './firebase';
+import { ToastContainer, toast, Slide } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function Login() {
@@ -15,63 +18,88 @@ function Login() {
     setIsLoading(true);
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      navigate('/otp');
+      toast.success('Login Successful!', {
+        position: "bottom-right",
+        autoClose: 2000,
+        theme: "light",
+      });
+      setTimeout(() => {
+        navigate('/otp');
+      }, 2000);
     } catch (error) {
       console.error('Firebase Login Error:', error);
-      alert('Login failed: ' + error.message + '\nError Code: ' + error.code);
+      toast.error('Login failed: ' + error.message, {
+        position: "bottom-right",
+        autoClose: 3000,
+        theme: "colored",
+      });
     }
     setIsLoading(false);
   };
 
-return (
-    <div className="d-flex align-items-center justify-content-center vh-100" 
-         style={{ background: 'linear-gradient(to bottom right, #f5faff, #e0ecff)' }}>
-      <div className="card shadow-lg p-4" style={{ width: '100%', maxWidth: '400px', borderRadius: '15px' }}>
-        <div className="text-center mb-3">
-          <h3 className="fw-bold mb-0">NMERP SYSTEM</h3>
-           </div>
-        <h5 className="mb-3 fw-semibold">Sign In</h5>
-        <p className="text-muted small mb-3">Please sign in with your NutMeg official email</p>
+  return (
+    <div className="container d-flex flex-column justify-content-center align-items-center min-vh-100 bg-light">
+      <ToastContainer transition={Slide} />
 
-        <form onSubmit={handleLogin}>
-          <div className="mb-3">
-            <label className="form-label">Email</label>
-            <input 
-              type="email" 
-              className="form-control" 
-              placeholder="name@nmsolutions.co.in" 
-              value={email} 
-              onChange={(e) => setEmail(e.target.value)} 
-              required 
-            />
-          </div>
+      {/* Title outside card */}
+      <div className="text-center mb-4">
+        <h1 className="fw-bold text-primary">NutMeg ERP System</h1>
+        
+      </div>
 
-          <div className="mb-2">
-            <label className="form-label">Password</label>
-            <input 
-              type="password" 
-              className="form-control" 
-              placeholder="Enter Password" 
-              value={password} 
-              onChange={(e) => setPassword(e.target.value)} 
-              required 
-            />
-          </div>
+     {/* Login Card */}
+<div className="card shadow-lg" style={{ width: '100%', maxWidth: '400px' }}>
+  <div className="card-body">
+    <h2 className="h4 mb-3">Sign In</h2>
+    <p className="text-secondary mb-4">
+      Please sign in with your NutMeg official email
+    </p>
 
-          <div className="text-end mb-3">
-            <Link to="/forgot-password" className="text-decoration-none">Forgot password?</Link>
-          </div>
+          <form onSubmit={handleLogin}>
+            <div className="mb-3">
+              <label htmlFor="email" className="form-label">Email</label>
+              <input
+                id="email"
+                type="email"
+                className="form-control"
+                placeholder="name@nmsolutions.co.in"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
 
-          <div className="d-grid mb-3">
-            <button type="submit" className="btn btn-primary" disabled={isLoading}>
+            <div className="mb-3">
+              <label htmlFor="password" className="form-label">Password</label>
+              <input
+                id="password"
+                type="password"
+                className="form-control"
+                placeholder="Enter Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
+
+            <div className="mb-3 text-end">
+              <Link to="/forgot-password" className="text-decoration-none text-primary">
+                Forgot password?
+              </Link>
+            </div>
+
+            <button type="submit" className="btn btn-primary w-100" disabled={isLoading}>
+              {isLoading && (
+                <AiOutlineLoading3Quarters className="me-2 spinner-border spinner-border-sm" />
+              )}
               {isLoading ? 'Signing In...' : 'Sign In'}
             </button>
-          </div>
-        </form>
+          </form>
 
-        <p className="text-center text-muted small mb-0">
-          Protected by Multi-Factor Authentication
-        </p>
+          <div className="mt-4 border-top pt-3 text-center text-muted small">
+            Protected by Multi-Factor Authentication
+          </div>
+        </div>
       </div>
     </div>
   );
