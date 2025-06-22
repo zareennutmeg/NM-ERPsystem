@@ -1,4 +1,5 @@
-import { Link, useNavigate } from "react-router-dom";
+
+import { Link, useNavigate, Outlet } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 const Layout = ({ children }) => {
@@ -11,7 +12,13 @@ const Layout = ({ children }) => {
   };
 
   if (!user) {
-    return <div className="d-flex justify-content-center align-items-center vh-100">Loading user...</div>;
+    return (
+      <div className="d-flex justify-content-center align-items-center vh-100">
+        <div className="spinner-border text-primary" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    );
   }
 
   const adminMenu = [
@@ -29,38 +36,38 @@ const Layout = ({ children }) => {
   return (
     <div className="d-flex vh-100">
       {/* Sidebar */}
-      <div className="d-flex flex-column justify-content-between bg-primary text-white p-3" style={{ width: '250px' }}>
-        <div>
-          <h2 className="mb-4">NMERP SYSTEM</h2>
-          <ul className="nav nav-pills flex-column mb-4">
+      <div className="d-flex flex-column bg-light border-end p-3" style={{ width: '250px' }}>
+        <div className="mb-4">
+          <h4 className="text-primary fw-semibold text-center">NMERP SYSTEM</h4>
+        </div>
+
+        <nav className="flex-grow-1">
+          <ul className="nav flex-column">
             {menu.map((item) => (
               <li className="nav-item mb-2" key={item.path}>
-                <Link to={item.path} className="nav-link text-white" style={{ borderRadius: '0.375rem' }}>
+                <Link to={item.path} className="nav-link text-dark fw-medium">
                   {item.label}
                 </Link>
               </li>
             ))}
           </ul>
-        </div>
+        </nav>
 
         <div className="border-top pt-3">
-          <div className="mb-2">
+          <div className="mb-2 text-center small">
             <strong>{user.name || 'User'}</strong><br />
-            <small>{user.email}</small><br />
-            <small>Role: {user.role}</small>
+            <span>{user.email}</span><br />
+            <span className="text-muted">Role: {user.role}</span>
           </div>
-          <button
-            onClick={handleLogout}
-            className="btn btn-danger w-100"
-          >
+          <button onClick={handleLogout} className="btn btn-outline-danger w-100">
             Logout
           </button>
         </div>
       </div>
 
       {/* Main Content */}
-      <main className="flex-grow-1 p-4" style={{ overflowY: 'auto' }}>
-        {children}
+      <main className="flex-grow-1 p-4 bg-white" style={{ overflowY: 'auto' }}>
+        <Outlet />
       </main>
     </div>
   );

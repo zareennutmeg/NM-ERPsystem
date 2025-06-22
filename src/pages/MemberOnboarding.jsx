@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from "react";
 import axios from "axios";
-import MemberCertificates from "./MemberCertificates";
+import MemberCertificates from "./pages/MemberCertificates";
 import "./MemberOnboarding.css";
 
 const API_URL = `http://13.48.244.216:5000/api/members`;

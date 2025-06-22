@@ -9,7 +9,7 @@ const adminModules = [
     title: "OnBoardDesk",
     description: "Manage new member registration and documents.",
     icon: <UserPlus className="h-10 w-10 text-nutmeg-600" />,
-    link: "/admin/onboard-desk",
+    link: "/onboard-desk",
     color: "bg-nutmeg-50",
   }
 ];

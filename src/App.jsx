@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Layout from './components/Layout';
-import Login from './Login';
-import ForgotPassword from './ForgotPassword';
+import Login from './pages/Login';
+import ForgotPassword from './pages/ForgotPassword';
 import OtpPage from './OtpPage';
 import AdminDashboard from './components/AdminDashboard';
 import MemberDashboard from './components/MemberDashboard';
-import MemberOnboarding from './MemberOnboarding';
+import MemberOnboarding from './pages/MemberOnboarding';
 
 function App() {
   const [role, setRole] = useState(null);  

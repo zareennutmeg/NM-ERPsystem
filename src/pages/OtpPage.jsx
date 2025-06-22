@@ -65,7 +65,7 @@ function OtpPage() {
       <ToastContainer transition={Slide} />
 
       <div className="text-center mb-4">
-        <h1 className="display-4 fw-bold text-primary">NutMeg ERP System</h1>
+        <h1 className="h3 fw-normal text-primary">NutMeg ERP System</h1>
       </div>
 
       <div className="card shadow-lg" style={{ width: '100%', maxWidth: '400px' }}>
