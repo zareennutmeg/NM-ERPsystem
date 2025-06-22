@@ -1,4 +1,4 @@
-// context/AuthContext.jsx
+// src/context/AuthContext.jsx
 
 import { createContext, useContext, useState, useEffect } from 'react';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
@@ -15,6 +15,7 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+      console.log('Firebase user:', firebaseUser);
       if (firebaseUser) {
         setUser({ uid: firebaseUser.uid, email: firebaseUser.email });
       } else {
@@ -28,13 +29,15 @@ export const AuthProvider = ({ children }) => {
     return () => unsubscribe();
   }, []);
 
-  // Fetch role only after OTP verified
   useEffect(() => {
     if (user && otpVerified) {
       axios.get(`http://13.48.244.216:5000/api/users/role/${user.uid}`)
-        .then((res) => setRole(res.data.role))
+        .then((res) => {
+          console.log("Fetched role:", res.data.role);
+          setRole(res.data.role);
+        })
         .catch((err) => {
-          console.error('Role fetch failed:', err);
+          console.error('Error fetching role:', err);
           setRole(null);
         });
     }
@@ -48,8 +51,8 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-   <AuthContext.Provider value={{ user, role, setRole, otpVerified, setOtpVerified, logout }}>
-      {!loading ? children : <div>Loading...</div>}
+    <AuthContext.Provider value={{ user, role, setRole, otpVerified, setOtpVerified, logout, loading }}>
+      {loading ? <div>Loading Firebase...</div> : children}
     </AuthContext.Provider>
   );
 };
