@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { onAuthStateChanged } from 'firebase/auth';
-import { auth } from './firebase';
 import axios from 'axios';
 import { ToastContainer, toast, Slide } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -16,17 +14,15 @@ function OtpPage() {
   const { user, role, otpVerified, setOtpVerified, setRole } = useAuth();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
-      if (firebaseUser) {
-        setEmail(firebaseUser.email);
-      } else {
-        navigate('/login');
-      }
-      setLoading(false);
-    });
-    return () => unsubscribe();
-  }, [navigate]);
+ useEffect(() => {
+  if (!user) {
+    navigate('/login');
+  } else {
+    setEmail(user.email);
+    setLoading(false);
+  }
+}, [user, navigate]);
+
 
   // After both OTP verified and role fetched, navigate to dashboard
  useEffect(() => {
@@ -40,7 +36,7 @@ function OtpPage() {
       }
     }
   }, [otpVerified, role, navigate]);
-  
+
   const sendOtp = async () => {
     try {
       await axios.post('http://13.48.244.216:5000/api/email/send-otp', { email });
