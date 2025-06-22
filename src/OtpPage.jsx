@@ -13,8 +13,8 @@ function OtpPage() {
   const [otp, setOtp] = useState('');
   const [otpSent, setOtpSent] = useState(false);
   const [isVerifying, setIsVerifying] = useState(false);
+  const { user, role, otpVerified, setOtpVerified, setRole } = useAuth();
   const navigate = useNavigate();
-  const { user, otpVerified, setOtpVerified, role } = useAuth();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
@@ -29,12 +29,18 @@ function OtpPage() {
   }, [navigate]);
 
   // After both OTP verified and role fetched, navigate to dashboard
-  useEffect(() => {
+ useEffect(() => {
     if (otpVerified && role) {
-      navigate('/');
+      if (role === 'admin') {
+        navigate('/admin-dashboard');
+      } else if (role === 'member') {
+        navigate('/member-dashboard');
+      } else {
+        navigate('/');
+      }
     }
   }, [otpVerified, role, navigate]);
-
+  
   const sendOtp = async () => {
     try {
       await axios.post('http://13.48.244.216:5000/api/email/send-otp', { email });

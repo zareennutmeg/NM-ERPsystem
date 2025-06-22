@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";  // adjust the path based on where your AuthContext file is
+import { useAuth } from "../context/AuthContext";
 
 const Layout = ({ children }) => {
   const { user, logout } = useAuth();
@@ -10,9 +10,8 @@ const Layout = ({ children }) => {
     navigate("/login");
   };
 
-  // Optional loading state (in case user is not loaded yet)
   if (!user) {
-    return <div>Loading user...</div>;
+    return <div className="d-flex justify-content-center align-items-center vh-100">Loading user...</div>;
   }
 
   const adminMenu = [
@@ -21,38 +20,22 @@ const Layout = ({ children }) => {
   ];
 
   const memberMenu = [
-    { path: "/member", label: "Dashboard" }
+    { path: "/member", label: "Dashboard" },
+     { path: "/onboard-desk", label: "Onboard Desk" }
   ];
 
   const menu = user.role === "admin" ? adminMenu : memberMenu;
 
   return (
-    <div style={{ display: "flex", minHeight: "100vh" }}>
-      <div
-        style={{
-          width: "250px",
-          backgroundColor: "#1e293b",
-          color: "white",
-          padding: "20px",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between"
-        }}
-      >
+    <div className="d-flex vh-100">
+      {/* Sidebar */}
+      <div className="d-flex flex-column justify-content-between bg-primary text-white p-3" style={{ width: '250px' }}>
         <div>
-          <h2>NMERP SYSTEM</h2>
-          <ul style={{ listStyle: "none", padding: 0 }}>
+          <h2 className="mb-4">NMERP SYSTEM</h2>
+          <ul className="nav nav-pills flex-column mb-4">
             {menu.map((item) => (
-              <li key={item.path}>
-                <Link
-                  style={{
-                    color: "white",
-                    textDecoration: "none",
-                    display: "block",
-                    marginBottom: "15px"
-                  }}
-                  to={item.path}
-                >
+              <li className="nav-item mb-2" key={item.path}>
+                <Link to={item.path} className="nav-link text-white" style={{ borderRadius: '0.375rem' }}>
                   {item.label}
                 </Link>
               </li>
@@ -60,29 +43,25 @@ const Layout = ({ children }) => {
           </ul>
         </div>
 
-        <div>
-          <div>
-            <strong>{user.name}</strong><br />
+        <div className="border-top pt-3">
+          <div className="mb-2">
+            <strong>{user.name || 'User'}</strong><br />
             <small>{user.email}</small><br />
             <small>Role: {user.role}</small>
           </div>
           <button
             onClick={handleLogout}
-            style={{
-              marginTop: "10px",
-              padding: "10px 20px",
-              backgroundColor: "#ef4444",
-              color: "white",
-              border: "none",
-              borderRadius: "5px"
-            }}
+            className="btn btn-danger w-100"
           >
             Logout
           </button>
         </div>
       </div>
 
-      <div style={{ flexGrow: 1, padding: "20px" }}>{children}</div>
+      {/* Main Content */}
+      <main className="flex-grow-1 p-4" style={{ overflowY: 'auto' }}>
+        {children}
+      </main>
     </div>
   );
 };
