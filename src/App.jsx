@@ -7,7 +7,6 @@ import OtpPage from './OtpPage';
 import AdminDashboard from './components/AdminDashboard';
 import MemberDashboard from './components/MemberDashboard';
 import MemberOnboarding from './MemberOnboarding';
-import PrivateRoute from './PrivateRoute';
 
 function App() {
   const [role, setRole] = useState(null);  
@@ -21,32 +20,10 @@ function App() {
 
         <Route path="/otp" element={<OtpPage setRole={setRole} setIsAuthenticated={setIsAuthenticated} />} />
 
-        {/* Protected Layout */}
-        <Route 
-          path="/*" 
-          element={
-            <PrivateRoute isAuthenticated={isAuthenticated}>
-              <Layout role={role} />
-            </PrivateRoute>
-          }
-        >
-          {/* Nested routes inside layout */}
-          <Route 
-            path="admin" 
-            element={
-              <PrivateRoute isAuthenticated={isAuthenticated} allowedRoles={['admin']} userRole={role}>
-                <AdminDashboard />
-              </PrivateRoute>
-            } 
-          />
-          <Route 
-            path="member" 
-            element={
-              <PrivateRoute isAuthenticated={isAuthenticated} allowedRoles={['member']} userRole={role}>
-                <MemberDashboard />
-              </PrivateRoute>
-            } 
-          />
+        {/* No PrivateRoute, just render Layout directly */}
+        <Route path="/*" element={<Layout role={role} />} >
+          <Route path="admin" element={<AdminDashboard />} />
+          <Route path="member" element={<MemberDashboard />} />
           <Route path="onboard-desk" element={<MemberOnboarding />} />
         </Route>
 
