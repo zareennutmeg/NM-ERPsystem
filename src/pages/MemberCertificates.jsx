@@ -9,7 +9,7 @@ const MemberCertificates = ({ memberId }) => {
   const fetchCertificates = useCallback(async () => {
     if (!memberId) return;
     try {
-      const res = await axios.get(`/api/members/${memberId}/certificates`);
+      const res = await axios.get(`http://13.48.244.216:5000/api/members/${memberId}/certificates`);
       setCertificates(res.data);
     } catch (err) {
       console.error('Error fetching certificates', err);
@@ -34,7 +34,7 @@ const MemberCertificates = ({ memberId }) => {
 
   try {
     setUploading(true);
-    await axios.post(`/api/members/${memberId}/certificates`, formData, {
+    await axios.post(`http://13.48.244.216:5000/api/members/${memberId}/certificates`, formData, {
       headers: { 'Content-Type': 'multipart/form-data' }
     });
     setSelectedFiles([]);
@@ -54,7 +54,7 @@ const MemberCertificates = ({ memberId }) => {
 
   const handleDownload = async (id, name) => {
     try {
-      const res = await axios.get(`/api/certificates/${id}/download`, {
+      const res = await axios.get(`http://13.48.244.216:5000/api/certificates/${id}/download`, {
         responseType: 'blob',
       });
 

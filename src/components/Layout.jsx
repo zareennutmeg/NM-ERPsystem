@@ -1,10 +1,12 @@
 
-import { Link, useNavigate, Outlet } from "react-router-dom";
+import { Link, useNavigate, Outlet, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { FaTachometerAlt, FaUserPlus } from "react-icons/fa"; 
 
-const Layout = ({ children }) => {
+const Layout = () => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleLogout = () => {
     logout();
@@ -22,22 +24,20 @@ const Layout = ({ children }) => {
   }
 
   const adminMenu = [
-    { path: "/admin", label: "Dashboard" },
-    { path: "/onboard-desk", label: "Onboard Desk" }
+    { path: "/admin", label: "Dashboard", icon: <FaTachometerAlt className="me-2" /> },
+    { path: "/onboard-desk", label: "Onboard Desk", icon: <FaUserPlus className="me-2" /> }
   ];
-
   const memberMenu = [
-    { path: "/member", label: "Dashboard" },
-     { path: "/onboard-desk", label: "Onboard Desk" }
+    { path: "/member", label: "Dashboard", icon: <FaTachometerAlt className="me-2" /> },
+    { path: "/onboard-desk", label: "Onboard Desk", icon: <FaUserPlus className="me-2" /> }
   ];
-
   const menu = user.role === "admin" ? adminMenu : memberMenu;
 
   return (
-    <div className="d-flex vh-100">
+     <div className="d-flex vh-100">
       {/* Sidebar */}
-      <div className="d-flex flex-column bg-light border-end p-3" style={{ width: '250px' }}>
-        <div className="mb-4">
+      <div className="d-flex flex-column bg-primary text-white p-3" style={{ width: '250px' }}>
+        <div className="mb-4 text-center">
           <h4 className="text-primary fw-semibold text-center">NMERP SYSTEM</h4>
         </div>
 
@@ -45,7 +45,13 @@ const Layout = ({ children }) => {
           <ul className="nav flex-column">
             {menu.map((item) => (
               <li className="nav-item mb-2" key={item.path}>
-                <Link to={item.path} className="nav-link text-dark fw-medium">
+                <Link
+                  to={item.path}
+                  className={`nav-link d-flex align-items-center fw-medium ${
+                    location.pathname === item.path ? 'bg-light text-primary rounded px-2' : 'text-white'
+                  }`}
+                >
+                  {item.icon}
                   {item.label}
                 </Link>
               </li>
@@ -55,10 +61,9 @@ const Layout = ({ children }) => {
 
         <div className="border-top pt-3">
           <div className="mb-2 text-center small">
-            <strong>{user.name || 'User'}</strong><br />
+            <strong>{user.name}</strong><br />
             <span>{user.email}</span><br />
-            <span className="text-muted">Role: {user.role}</span>
-          </div>
+               </div>
           <button onClick={handleLogout} className="btn btn-outline-danger w-100">
             Logout
           </button>

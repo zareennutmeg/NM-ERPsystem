@@ -7,6 +7,7 @@ import './MemberDashboard.css';  // You can create the CSS file based on your pr
 function MemberDashboard() {
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
+  const { user, role } = useAuth(); 
 
   // Member modules configuration
   const memberModules = [
@@ -49,10 +50,23 @@ function MemberDashboard() {
   const handleModuleClick = (link) => {
     navigate(link);
   };
+  const getInitial = (name) => {
+    return name && name.length > 0 ? name.charAt(0).toUpperCase() : '?';
+  };
 
   return (
-    <div className="dashboard-container">
-      <h1>Member Dashboard</h1>
+      <div className="dashboard-container">
+      {/* Header */}
+      <div className="dashboard-header d-flex justify-content-between align-items-center mb-4">
+        <h2>Welcome, {user?.email?.split('@')[0]}</h2>
+
+        <div className="d-flex align-items-center">
+          <div className="me-3 text-muted">Role: {role}</div>
+          <div className="user-avatar bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" style={{ width: 40, height: 40 }}>
+            {getInitial(user?.email)}
+          </div>
+        </div>
+      </div>
       <p>{message}</p>
 
       <div className="tiles-container">

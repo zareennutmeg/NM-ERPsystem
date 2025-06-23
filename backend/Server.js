@@ -35,7 +35,7 @@ const pool2 = new pg.Pool({
 // Pool3: For member onboarding database
 const pool3 = new pg.Pool({
   user: 'postgres',
-  host: '127.0.0.1',  // or your DB host
+  host: '13.48.244.216',  // or your DB host
   database: 'memberonboard',
   password: 'postgres',
   port: 5432,

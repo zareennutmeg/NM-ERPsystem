@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 import axios from 'axios';
 
 const AuthContext = createContext();
@@ -52,12 +52,25 @@ export function AuthProvider({ children }) {
 
     return () => unsubscribe();
   }, []);
+  const logout = () => {
+    signOut(auth)
+      .then(() => {
+        setUser(null);
+        setRole(null);
+        setOtpVerified(false);
+        localStorage.removeItem('otpVerified');
+      })
+      .catch((error) => {
+        console.error("Error signing out:", error);
+      });
+  };
 
   const value = {
     user,
     role,
     otpVerified,
     setOtpVerified,
+    logout,
   };
 
   return (
