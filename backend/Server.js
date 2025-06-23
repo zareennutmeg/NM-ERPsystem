@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import pg from 'pg';
-import emailServiceRouter from './emailService.js';
+import emailServiceRouter, { sendOnboardingEmail } from './emailService.js';
 import uploadCertificateRouter from './uploadCertificate.js';
 const app = express();
 const PORT = 5000;
@@ -110,7 +110,7 @@ app.post('/api/members', async (req, res) => {
 
     // Send onboarding email
     try {
-      await emailServiceRouter.sendOnboardingEmail(email, name);
+      await emailServiceRouter.sendOnboardingEmail(email, name, newMemberId, designation);
     } catch (emailErr) {
       console.error('Email sending failed:', emailErr.message);
     }

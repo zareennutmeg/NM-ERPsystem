@@ -14,7 +14,7 @@ const __dirname = path.dirname(__filename);
 // PostgreSQL connection (hardcoded)
 const pool3 = new Pool({
   user: 'postgres',
-  host: '127.0.0.1',
+  host: '13.48.244.216',
   database: 'memberonboard',
   password: 'postgres',
   port: 5432,
