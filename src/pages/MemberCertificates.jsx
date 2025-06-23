@@ -100,17 +100,19 @@ const MemberCertificates = ({ memberId }) => {
     <ul className="list-group">
       {certificates.map(cert => (
         <li key={cert.id} className="list-group-item d-flex justify-content-between align-items-center">
-          <span>{cert.file_name}</span>
+          <span>{cert.certificate_name}</span>
           <div className="btn-group">
             <button
               className="btn btn-sm btn-success"
-              onClick={() => handleDownload(cert.id, cert.file_name)}
+              onClick={() => handleDownload(cert.certificate_id, cert.certificate_name)}
+
             >
               Download
             </button>
             <button
               className="btn btn-sm btn-danger"
-              onClick={() => handleDelete(cert.id)}
+              onClick={() => handleDelete(cert.certificate_id)}
+
             >
               Delete
             </button>

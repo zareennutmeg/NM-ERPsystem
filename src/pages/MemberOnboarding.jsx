@@ -42,7 +42,6 @@ const MemberOnboarding = () => {
       setMembers(response.data);
     } catch (error) {
       console.error("Error fetching members", error);
-      t
       toast.error("Failed to fetch members");
     }
   };
