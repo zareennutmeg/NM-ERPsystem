@@ -9,7 +9,6 @@ export function useAuth() {
 }
 
 export function AuthProvider({ children }) {
-  const auth = getAuth();
   const [user, setUser] = useState(null);
   const [role, setRole] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -25,6 +24,7 @@ export function AuthProvider({ children }) {
   };
 
   useEffect(() => {
+    const auth = getAuth();
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
       console.log('Firebase user:', firebaseUser);
       if (firebaseUser) {
@@ -53,6 +53,7 @@ export function AuthProvider({ children }) {
     return () => unsubscribe();
   }, []);
   const logout = () => {
+    const auth = getAuth();
     signOut(auth)
       .then(() => {
         setUser(null);

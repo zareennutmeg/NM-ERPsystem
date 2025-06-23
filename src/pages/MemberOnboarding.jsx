@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import MemberCertificates from "./MemberCertificates";
 import "./MemberOnboarding.css";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 const API_URL = `http://13.48.244.216:5000/api/members`;
 
@@ -25,8 +27,6 @@ const MemberOnboarding = () => {
   };
 
   const [formData, setFormData] = useState(initialFormState);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
   const [editing, setEditing] = useState(false);
   const [members, setMembers] = useState([]);
   const [editId, setEditId] = useState(null);
@@ -42,7 +42,8 @@ const MemberOnboarding = () => {
       setMembers(response.data);
     } catch (error) {
       console.error("Error fetching members", error);
-      setErrorMessage("Failed to fetch members");
+      t
+      toast.error("Failed to fetch members");
     }
   };
 
@@ -73,8 +74,7 @@ const MemberOnboarding = () => {
 
     setEditId(member.member_id);
     setEditing(true);
-    setErrorMessage("");
-    setSuccessMessage("");
+    
   };
 
   const handleDelete = async (id) => {
@@ -82,11 +82,11 @@ const MemberOnboarding = () => {
 
     try {
       await axios.delete(`${API_URL}/${id}`);
-      setSuccessMessage("Member deleted successfully");
+      toast.success("Member deleted successfully");
       fetchMembers();
     } catch (error) {
       console.error("Error deleting member:", error);
-      setErrorMessage("Failed to delete member");
+      toast.error("Failed to delete member");
     }
   };
 
@@ -101,25 +101,23 @@ const handleSubmit = async (e) => {
       await axios.put(`${API_URL}/${editId}`, dataToSend, {
         headers: { "Content-Type": "application/json" },
       });
-      setSuccessMessage("Member updated successfully");
+      toast.success("Member updated successfully");
     } else {
       const response = await axios.post(API_URL, dataToSend, {
         headers: { "Content-Type": "application/json" },
       });
       const { member: { member_id: newMemberId }, message } = response.data;
-      setSuccessMessage(message || "Member added successfully");
+      toast.success(message || "Member added successfully");
       setEditId(newMemberId); // allow immediate certificate upload
     }
 
     setFormData(initialFormState);
     setEditing(false);
-    setErrorMessage("");
     fetchMembers();
 
   } catch (error) {
     console.error("Error adding/updating member:", error);
-    setErrorMessage(error.response?.data?.error || "Failed to add/update member");
-    setSuccessMessage("");
+    toast.error(error.response?.data?.error || "Failed to add/update member");
   }
 };
   return (
@@ -127,11 +125,18 @@ const handleSubmit = async (e) => {
       <div className="form-container mt-4">
         <h1 className="text-3xl font-bold">OnBoardDesk Management</h1>
         <p className="text-muted-foreground mt-1">Manage new member registration</p>
-
-        {successMessage && <div className="alert alert-success">{successMessage}</div>}
-        {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
-
-        <form onSubmit={handleSubmit}>
+ {/* Toast container */}
+        <ToastContainer 
+          position="bottom-right" 
+          autoClose={3000} 
+          hideProgressBar={false} 
+          newestOnTop 
+          closeOnClick 
+          pauseOnHover 
+          draggable 
+          theme="colored" 
+        />
+              <form onSubmit={handleSubmit}>
           <h2 className="text-secondary mb-3">Personal Information</h2>
           <div className="row g-3">
             <div className="col-md-12">

@@ -34,12 +34,12 @@ const Layout = () => {
   const menu = user.role === "admin" ? adminMenu : memberMenu;
 
   return (
-     <div className="d-flex vh-100">
-      {/* Sidebar */}
-      <div className="d-flex flex-column bg-primary text-white p-3" style={{ width: '250px' }}>
-        <div className="mb-4 text-center">
-          <h4 className="text-primary fw-semibold text-center">NMERP SYSTEM</h4>
-        </div>
+    <div className="d-flex vh-100">
+    {/* Sidebar */}
+    <div className="d-flex flex-column bg-primary text-white p-3 shadow" style={{ width: '250px' }}>
+      <div className="mb-4 text-center border-bottom pb-3">
+        <h4 className="fw-bold">NMERP SYSTEM</h4>
+      </div>
 
         <nav className="flex-grow-1">
           <ul className="nav flex-column">

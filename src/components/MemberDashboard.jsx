@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { UserPlus, FileText, Clock, CalendarDays } from "lucide-react";
+import { useAuth } from '../context/AuthContext';
 import './MemberDashboard.css';  // You can create the CSS file based on your previous style
 
 function MemberDashboard() {
@@ -10,37 +11,36 @@ function MemberDashboard() {
   const { user, role } = useAuth(); 
 
   // Member modules configuration
-  const memberModules = [
+   const memberModules = [
     {
       title: "OnBoardDesk",
       description: "Manage your onboarding documents.",
-      icon: <UserPlus className="h-10 w-10 text-nutmeg-600" />,
+      icon: <UserPlus className="text-primary" size={40} />,  // Blue
       link: "/onboard-desk",
-      color: "bg-nutmeg-50",
+      color: "bg-light",
     },
     {
       title: "Timesheet",
       description: "Fill and submit your timesheets.",
-      icon: <Clock className="h-10 w-10 text-nutmeg-600" />,
+      icon: <Clock className="text-success" size={40} />,  // Green
       link: "/member/timesheet",
-      color: "bg-nutmeg-50",
+      color: "bg-light",
     },
     {
       title: "Payslips",
       description: "View and download your payslips.",
-      icon: <FileText className="h-10 w-10 text-nutmeg-600" />,
+      icon: <FileText className="text-warning" size={40} />,  // Yellow
       link: "/member/payslips",
-      color: "bg-nutmeg-50",
+      color: "bg-light",
     },
     {
       title: "Leave",
       description: "Apply for leave and check leave status.",
-      icon: <CalendarDays className="h-10 w-10 text-nutmeg-600" />,
+      icon: <CalendarDays className="text-danger" size={40} />,  // Red
       link: "/member/leave",
-      color: "bg-nutmeg-50",
+      color: "bg-light",
     }
   ];
-
   useEffect(() => {
     axios.get('http://13.48.244.216:5000/api/message')
       .then(res => setMessage(res.data.message))
@@ -58,7 +58,7 @@ function MemberDashboard() {
       <div className="dashboard-container">
       {/* Header */}
       <div className="dashboard-header d-flex justify-content-between align-items-center mb-4">
-        <h2>Welcome, {user?.email?.split('@')[0]}</h2>
+        <h2>Welcome, {user?.name?.split('@')[0]}</h2>
 
         <div className="d-flex align-items-center">
           <div className="me-3 text-muted">Role: {role}</div>
