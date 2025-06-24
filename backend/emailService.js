@@ -77,4 +77,3 @@ router.post('/verify-otp', (req, res) => {
 
 // Export router separately
 export default router;
-export { sendOnboardingEmail };
