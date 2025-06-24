@@ -4,11 +4,13 @@ import Layout from './components/Layout';
 import Login from './pages/Login';
 import ForgotPassword from './pages/ForgotPassword';
 import OtpPage from './pages/OtpPage';
-import Dashboard from './pages/Dashboard'
+import Dashboard from './pages/Dashboard';
+import AdminDashboard from './components/AdminDashboard';
+import MemberDashboard from './components/MemberDashboard';
 import MemberOnboarding from './pages/MemberOnboarding';
 
 function App() {
-  const [role, setRole] = useState(null);  
+  const [role, setRole] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   return (
