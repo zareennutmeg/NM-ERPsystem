@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import pg from 'pg';
-import emailServiceRouter, { sendOnboardingEmail } from './emailService.js';
+import emailService from './emailService.js';
 import uploadCertificateRouter from './uploadCertificate.js';
 const app = express();
 const PORT = 5000;
@@ -9,7 +9,7 @@ const PORT = 5000;
 app.use(cors());
 app.use(express.json());
 // Mount email service routes at /api/email
-app.use('/api/email', emailServiceRouter);
+app.use('/api/email', emailService.router);
 app.use('/api', uploadCertificateRouter);
 
 // Pool1: For `myapp` database (static_message)
@@ -90,7 +90,7 @@ app.post('/api/members', async (req, res) => {
   try {
     const {
       name, age, gender, aadhar_number, pan_number, bank_name, bank_account,
-      bank_branch, ifsc_code, date_of_birth, date_of_joining, email
+      bank_branch, ifsc_code, date_of_birth, date_of_joining, email, designation
     } = req.body;
 
     if (!name || !age || !gender || !aadhar_number || !pan_number || !bank_name || !bank_account || !bank_branch || !ifsc_code || !date_of_birth || !date_of_joining || !email) {
@@ -102,15 +102,15 @@ app.post('/api/members', async (req, res) => {
     const result = await pool3.query(
       `INSERT INTO "TPPL"."TPPL_members" 
       (member_id, name, age, gender, aadhar_number, pan_number, bank_name, 
-       bank_account, bank_branch, ifsc_code, date_of_birth, date_of_joining, email) 
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13) RETURNING *`,
+       bank_account, bank_branch, ifsc_code, date_of_birth, date_of_joining, email, designation) 
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) RETURNING *`,
       [newMemberId, name, age, gender, aadhar_number, pan_number, bank_name,
-       bank_account, bank_branch, ifsc_code, date_of_birth, date_of_joining, email]
+       bank_account, bank_branch, ifsc_code, date_of_birth, date_of_joining, email, designation]
     );
 
     // Send onboarding email
     try {
-      await emailServiceRouter.sendOnboardingEmail(email, name, newMemberId, designation);
+      await emailService.sendOnboardingEmail(email, name, newMemberId, designation);
     } catch (emailErr) {
       console.error('Email sending failed:', emailErr.message);
     }
@@ -152,7 +152,7 @@ app.put('/api/members/:id', async (req, res) => {
   const { id } = req.params;
   const {
     name, age, gender, aadhar_number, pan_number, bank_name, bank_account,
-    bank_branch, ifsc_code, date_of_birth, date_of_joining, email
+    bank_branch, ifsc_code, date_of_birth, date_of_joining, email, designation
   } = req.body;
 
   try {
@@ -160,11 +160,11 @@ app.put('/api/members/:id', async (req, res) => {
       `UPDATE "TPPL"."TPPL_members"
        SET name=$1, age=$2, gender=$3, aadhar_number=$4, pan_number=$5, bank_name=$6,
            bank_account=$7, bank_branch=$8, ifsc_code=$9, date_of_birth=$10,
-           date_of_joining=$11, email=$12
-       WHERE member_id=$13
+           date_of_joining=$11, email=$12, designation=$13
+       WHERE member_id=$14
        RETURNING *`,
       [name, age, gender, aadhar_number, pan_number, bank_name, bank_account,
-       bank_branch, ifsc_code, date_of_birth, date_of_joining, email, id]
+       bank_branch, ifsc_code, date_of_birth, date_of_joining, email, designation, id]
     );
 
     if (result.rows.length === 0) return res.status(404).json({ error: 'Member not found' });

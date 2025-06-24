@@ -126,7 +126,7 @@ const handleSubmit = async (e) => {
         <p className="text-muted-foreground mt-1">Manage new member registration</p>
  {/* Toast container */}
         <ToastContainer 
-          position="bottom-right" 
+          position="top-right" 
           autoClose={3000} 
           hideProgressBar={false} 
           newestOnTop 

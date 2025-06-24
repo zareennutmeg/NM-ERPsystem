@@ -19,7 +19,7 @@ function generateOTP() {
 }
 
 // === Public reusable function to send onboarding email ===
-export async function sendOnboardingEmail(email, name, memberId, designation) {
+async function sendOnboardingEmail(email, name, memberId, designation) {
   const mailOptions = {
     from: 'zareen.hussaini@nmsolutions.co.in',
     to: email,
@@ -75,4 +75,8 @@ router.post('/verify-otp', (req, res) => {
   res.status(400).json({ verified: false, error: 'Invalid OTP' });
 });
 
-export default router;
+// Export both together
+export default {
+  router,
+  sendOnboardingEmail,
+};
