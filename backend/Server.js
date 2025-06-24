@@ -81,8 +81,12 @@ app.get('/api/users/role/:uid', async (req, res) => {
 const getNextMemberId = async () => {
   const result = await pool3.query(`SELECT member_id FROM "TPPL"."TPPL_members" ORDER BY member_id DESC LIMIT 1`);
   if (result.rows.length === 0) return "NM001";
-  const num = parseInt(result.rows[0].member_id.substring(2), 10) + 1;
-  return `NM${num.toString().padStart(3, '0')}`;
+  
+  const lastId = result.rows[0].member_id;
+  const numPart = parseInt(lastId.replace(/[^\d]/g, ''), 10);
+  const nextNum = (isNaN(numPart) ? 0 : numPart) + 1;
+  
+  return `NM${nextNum.toString().padStart(3, '0')}`;
 };
 
 // Add new member
@@ -112,7 +116,8 @@ app.post('/api/members', async (req, res) => {
     try {
       await sendOnboardingEmail(email, name, newMemberId, designation);
     } catch (emailErr) {
-      console.error('Email sending failed:', emailErr.message);
+     console.error('Email sending failed:', emailErr);
+
     }
 
     res.status(201).json({
