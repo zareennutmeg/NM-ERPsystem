@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import pg from 'pg';
-import emailService from './emailService.js';
+import emailServiceRouter, { sendOnboardingEmail } from './emailService.js';
 import uploadCertificateRouter from './uploadCertificate.js';
 const app = express();
 const PORT = 5000;
@@ -9,13 +9,13 @@ const PORT = 5000;
 app.use(cors());
 app.use(express.json());
 // Mount email service routes at /api/email
-app.use('/api/email', emailService.router);
+app.use('/api/email', emailServiceRouter);
 app.use('/api', uploadCertificateRouter);
 
 // Pool1: For `myapp` database (static_message)
 const pool1 = new pg.Pool({
   user: 'postgres',
-  host: '127.0.0.1',
+  host: '13.48.244.216',
   database: 'myapp',
   password: 'postgres',
   port: 5432,
@@ -93,7 +93,7 @@ app.post('/api/members', async (req, res) => {
       bank_branch, ifsc_code, date_of_birth, date_of_joining, email, designation
     } = req.body;
 
-    if (!name || !age || !gender || !aadhar_number || !pan_number || !bank_name || !bank_account || !bank_branch || !ifsc_code || !date_of_birth || !date_of_joining || !email) {
+    if (!name || !age || !gender || !aadhar_number || !pan_number || !bank_name || !bank_account || !bank_branch || !ifsc_code || !date_of_birth || !date_of_joining || !email || !designation) {
       return res.status(400).json({ error: 'Missing required fields' });
     }
 
@@ -110,7 +110,7 @@ app.post('/api/members', async (req, res) => {
 
     // Send onboarding email
     try {
-      await emailService.sendOnboardingEmail(email, name, newMemberId, designation);
+      await sendOnboardingEmail(email, name, newMemberId, designation);
     } catch (emailErr) {
       console.error('Email sending failed:', emailErr.message);
     }

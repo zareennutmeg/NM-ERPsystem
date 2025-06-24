@@ -4,7 +4,7 @@ import nodemailer from 'nodemailer';
 
 const router = express.Router();
 
-const otpStore = {}; // In-memory store, use Redis/DB in production
+const otpStore = {}; // In-memory store
 
 const transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -19,7 +19,7 @@ function generateOTP() {
 }
 
 // === Public reusable function to send onboarding email ===
-async function sendOnboardingEmail(email, name, memberId, designation) {
+export async function sendOnboardingEmail(email, name, memberId, designation) {
   const mailOptions = {
     from: 'zareen.hussaini@nmsolutions.co.in',
     to: email,
@@ -75,8 +75,6 @@ router.post('/verify-otp', (req, res) => {
   res.status(400).json({ verified: false, error: 'Invalid OTP' });
 });
 
-// Export both together
-export default {
-  router,
-  sendOnboardingEmail,
-};
+// Export router separately
+export default router;
+export { sendOnboardingEmail };
