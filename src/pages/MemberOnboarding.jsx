@@ -8,10 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const API_URL = `http://13.48.244.216:5000/api/members`;
 
-const validateEmail = (email) => {
-  const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,24}$/;
-  return regex.test(email);
-};
+
 
 const MemberOnboarding = () => {
   const initialFormState = {
@@ -92,16 +89,61 @@ const MemberOnboarding = () => {
       toast.error("Failed to delete member");
     }
   };
+const validateForm = (data) => {
+  const errors = [];
+
+  if (!/^[A-Za-z\s]{1,50}$/.test(data.name)) {
+    errors.push("Name must be alphabetic and up to 50 characters.");
+  }
+
+  if (!(data.age >= 1 && data.age <= 60)) {
+    errors.push("Age must be between 1 and 60.");
+  }
+
+  if (!/^[A-Za-z\s]{1,50}$/.test(data.designation)) {
+    errors.push("Designation must be alphabetic and up to 50 characters.");
+  }
+
+  if (!/^\d{12}$/.test(data.aadhar_number)) {
+    errors.push("Aadhar must be exactly 12 digits.");
+  }
+
+  if (!/^[A-Z0-9]{10}$/i.test(data.pan_number)) {
+    errors.push("PAN must be alphanumeric and exactly 10 characters.");
+  }
+
+  if (!/^[A-Za-z\s]{1,50}$/.test(data.bank_name)) {
+    errors.push("Bank name must be alphabetic and up to 50 characters.");
+  }
+
+  if (!/^[0-9]{1,20}$/.test(data.bank_account)) {
+    errors.push("Bank account must be numeric up to 20 digits.");
+  }
+
+  if (!/^[A-Za-z\s]{1,25}$/.test(data.bank_branch)) {
+    errors.push("Branch must be alphabetic and up to 25 characters.");
+  }
+
+  if (!/^[A-Za-z0-9]{1,20}$/.test(data.ifsc_code)) {
+    errors.push("IFSC code must be alphanumeric up to 20 characters.");
+  }
+
+  if (!validateEmail(data.email)) {
+    errors.push("Invalid email format.");
+  }
+
+  return errors;
+};
 
 const handleSubmit = async (e) => {
   e.preventDefault();
 
-   if (!validateEmail(formData.email)) {
-      toast.error("Invalid email address");
-      return;
-    }
-
-  try {
+const validationErrors = validateForm(formData);
+  if (validationErrors.length > 0) {
+    validationErrors.forEach(err => toast.warning(err));
+    return;
+  }
+    try {
     const dataToSend = { ...formData };
 
 
@@ -149,7 +191,7 @@ const handleSubmit = async (e) => {
           <div className="row g-3">
             <div className="col-md-12">
               <label className="form-label">Full Name (As per passport)</label>
-              <input type="text" className="form-control" name="name" value={formData.name} onChange={handleChange} required autoComplete="off" />
+              <input type="text" className="form-control" name="name" value={formData.name} onChange={handleChange} required autoComplete="off" maxLength="50" />
             </div>
             <div className="col-md-6">
               <label className="form-label">Age</label>
@@ -173,7 +215,7 @@ const handleSubmit = async (e) => {
             </div>
             <div className="col-md-6">
               <label className="form-label">Designation</label>
-              <input type="text" className="form-control" name="designation" value={formData.designation} onChange={handleChange} required autoComplete="off" />
+              <input type="text" className="form-control" name="designation" value={formData.designation} onChange={handleChange} required autoComplete="off" maxLength="50" />
             </div>
             <div className="col-md-12">
               <label className="form-label">Email</label>
@@ -185,11 +227,11 @@ const handleSubmit = async (e) => {
           <div className="row g-3">
             <div className="col-md-6">
               <label className="form-label">Aadhar Number</label>
-              <input type="text" className="form-control" name="aadhar_number" value={formData.aadhar_number} onChange={handleChange} required autoComplete="off" />
+              <input type="text" className="form-control" name="aadhar_number" value={formData.aadhar_number} onChange={handleChange} required autoComplete="off" maxLength="12"/>
             </div>
             <div className="col-md-6">
               <label className="form-label">PAN Number</label>
-              <input type="text" className="form-control" name="pan_number" value={formData.pan_number} onChange={handleChange} required autoComplete="off" />
+              <input type="text" className="form-control" name="pan_number" value={formData.pan_number} onChange={handleChange} required autoComplete="off" maxLength="10"/>
             </div>
           </div>
 
@@ -197,19 +239,19 @@ const handleSubmit = async (e) => {
           <div className="row g-3">
             <div className="col-md-6">
               <label className="form-label">Bank Name</label>
-              <input type="text" className="form-control" name="bank_name" value={formData.bank_name} onChange={handleChange} required autoComplete="off" />
+              <input type="text" className="form-control" name="bank_name" value={formData.bank_name} onChange={handleChange} required autoComplete="off" maxLength="50" />
             </div>
             <div className="col-md-6">
               <label className="form-label">Bank Account Number</label>
-              <input type="text" className="form-control" name="bank_account" value={formData.bank_account} onChange={handleChange} required autoComplete="off" />
+              <input type="text" className="form-control" name="bank_account" value={formData.bank_account} onChange={handleChange} required autoComplete="off" maxLength="20" />
             </div>
             <div className="col-md-6">
               <label className="form-label">Bank Branch</label>
-              <input type="text" className="form-control" name="bank_branch" value={formData.bank_branch} onChange={handleChange} required autoComplete="off" />
+              <input type="text" className="form-control" name="bank_branch" value={formData.bank_branch} onChange={handleChange} required autoComplete="off" maxLength="25" />
             </div>
             <div className="col-md-6">
               <label className="form-label">IFSC Code</label>
-              <input type="text" className="form-control" name="ifsc_code" value={formData.ifsc_code} onChange={handleChange} required autoComplete="off" />
+              <input type="text" className="form-control" name="ifsc_code" value={formData.ifsc_code} onChange={handleChange} required autoComplete="off" maxLength="20"/>
             </div>
           </div>
 

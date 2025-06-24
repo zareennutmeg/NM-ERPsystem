@@ -62,7 +62,8 @@ function OtpPage() {
 
   return (
     <div className="container d-flex flex-column justify-content-center align-items-center min-vh-100">
-      <ToastContainer transition={Slide} />
+     <ToastContainer position="top-right" transition={Slide} />
+
 
       <div className="text-center mb-4">
         <h1 className="h3 fw-normal text-primary">NutMeg ERP System</h1>
