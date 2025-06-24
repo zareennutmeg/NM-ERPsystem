@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Layout from './components/Layout';
 import Login from './pages/Login';
@@ -9,7 +9,7 @@ import MemberOnboarding from './pages/MemberOnboarding';
 
 function App() {
   const [role, setRole] = useState(null);  
-  const [setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   return (
     <Router>
@@ -22,6 +22,8 @@ function App() {
         {/* No PrivateRoute, just render Layout directly */}
         <Route path="/*" element={<Layout role={role} />} >
             <Route index element={<Dashboard role={role} />} />
+            <Route path="admin" element={<AdminDashboard />} />
+          <Route path="member" element={<MemberDashboard />} />
           <Route path="onboard-desk" element={<MemberOnboarding />} />
         </Route>
 
