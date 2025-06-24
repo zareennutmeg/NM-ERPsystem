@@ -34,11 +34,11 @@ function OtpPage() {
   const sendOtp = async () => {
     try {
       await axios.post('http://13.48.244.216:5000/api/email/send-otp', { email: user.email });
-      toast.success('OTP sent to your email', { position: 'bottom-right', autoClose: 3000 });
+      toast.success('OTP sent to your email', { position: 'top-right', autoClose: 3000 });
       setOtpSent(true);
     } catch (err) {
       console.error(err);
-      toast.error('Failed to send OTP', { position: 'bottom-right', autoClose: 3000 });
+      toast.error('Failed to send OTP', { position: 'top-right', autoClose: 3000 });
     }
   };
 
@@ -48,14 +48,14 @@ function OtpPage() {
     try {
       const res = await axios.post('http://13.48.244.216:5000/api/email/verify-otp', { email: user.email, otp });
       if (res.data.verified) {
-        toast.success('OTP verified successfully', { position: 'bottom-right', autoClose: 2000 });
+        toast.success('OTP verified successfully', { position: 'top-right', autoClose: 2000 });
         setOtpVerified(true);
       } else {
-        toast.error('Invalid OTP', { position: 'bottom-right', autoClose: 3000 });
+        toast.error('Invalid OTP', { position: 'top-right', autoClose: 3000 });
       }
     } catch (err) {
       console.error(err);
-      toast.error('Error verifying OTP', { position: 'bottom-right', autoClose: 3000 });
+      toast.error('Error verifying OTP', { position: 'top-right', autoClose: 3000 });
     }
     setIsVerifying(false);
   };
