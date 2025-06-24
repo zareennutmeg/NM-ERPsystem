@@ -64,9 +64,14 @@ const Layout = () => {
             <strong>{user.name}</strong><br />
             <span>{user.email}</span><br />
                </div>
-          <button onClick={handleLogout} className="btn btn-outline-danger w-100">
-            Logout
-          </button>
+         <button
+  onClick={handleLogout}
+  className="btn btn-outline-danger w-100"
+  style={{ backgroundColor: 'white', color: 'red' }}
+>
+  Logout
+</button>
+
         </div>
       </div>
 
