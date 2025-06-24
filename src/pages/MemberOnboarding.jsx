@@ -8,6 +8,10 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const API_URL = `http://13.48.244.216:5000/api/members`;
 
+const validateEmail = (email) => {
+  const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,24}$/;
+  return regex.test(email);
+};
 
 const MemberOnboarding = () => {
   const initialFormState = {
@@ -92,6 +96,11 @@ const MemberOnboarding = () => {
 const handleSubmit = async (e) => {
   e.preventDefault();
 
+   if (!validateEmail(formData.email)) {
+      toast.error("Invalid email address");
+      return;
+    }
+
   try {
     const dataToSend = { ...formData };
 
@@ -140,11 +149,11 @@ const handleSubmit = async (e) => {
           <div className="row g-3">
             <div className="col-md-12">
               <label className="form-label">Full Name (As per passport)</label>
-              <input type="text" className="form-control" name="name" value={formData.name} onChange={handleChange} required />
+              <input type="text" className="form-control" name="name" value={formData.name} onChange={handleChange} required autoComplete="off" />
             </div>
             <div className="col-md-6">
               <label className="form-label">Age</label>
-              <input type="number" className="form-control" name="age" value={formData.age} onChange={handleChange} required />
+              <input type="number" className="form-control" name="age" value={formData.age} onChange={handleChange} required  />
             </div>
             <div className="col-md-6">
               <label className="form-label">Gender</label>
@@ -164,11 +173,11 @@ const handleSubmit = async (e) => {
             </div>
             <div className="col-md-6">
               <label className="form-label">Designation</label>
-              <input type="text" className="form-control" name="designation" value={formData.designation} onChange={handleChange} required />
+              <input type="text" className="form-control" name="designation" value={formData.designation} onChange={handleChange} required autoComplete="off" />
             </div>
             <div className="col-md-12">
               <label className="form-label">Email</label>
-              <input type="email" className="form-control" name="email" value={formData.email} onChange={handleChange} required />
+              <input type="email" className="form-control" name="email" value={formData.email} onChange={handleChange} required autoComplete="off" />
             </div>
           </div>
 
@@ -176,11 +185,11 @@ const handleSubmit = async (e) => {
           <div className="row g-3">
             <div className="col-md-6">
               <label className="form-label">Aadhar Number</label>
-              <input type="text" className="form-control" name="aadhar_number" value={formData.aadhar_number} onChange={handleChange} required />
+              <input type="text" className="form-control" name="aadhar_number" value={formData.aadhar_number} onChange={handleChange} required autoComplete="off" />
             </div>
             <div className="col-md-6">
               <label className="form-label">PAN Number</label>
-              <input type="text" className="form-control" name="pan_number" value={formData.pan_number} onChange={handleChange} required />
+              <input type="text" className="form-control" name="pan_number" value={formData.pan_number} onChange={handleChange} required autoComplete="off" />
             </div>
           </div>
 
@@ -188,19 +197,19 @@ const handleSubmit = async (e) => {
           <div className="row g-3">
             <div className="col-md-6">
               <label className="form-label">Bank Name</label>
-              <input type="text" className="form-control" name="bank_name" value={formData.bank_name} onChange={handleChange} required />
+              <input type="text" className="form-control" name="bank_name" value={formData.bank_name} onChange={handleChange} required autoComplete="off" />
             </div>
             <div className="col-md-6">
               <label className="form-label">Bank Account Number</label>
-              <input type="text" className="form-control" name="bank_account" value={formData.bank_account} onChange={handleChange} required />
+              <input type="text" className="form-control" name="bank_account" value={formData.bank_account} onChange={handleChange} required autoComplete="off" />
             </div>
             <div className="col-md-6">
               <label className="form-label">Bank Branch</label>
-              <input type="text" className="form-control" name="bank_branch" value={formData.bank_branch} onChange={handleChange} required />
+              <input type="text" className="form-control" name="bank_branch" value={formData.bank_branch} onChange={handleChange} required autoComplete="off" />
             </div>
             <div className="col-md-6">
               <label className="form-label">IFSC Code</label>
-              <input type="text" className="form-control" name="ifsc_code" value={formData.ifsc_code} onChange={handleChange} required />
+              <input type="text" className="form-control" name="ifsc_code" value={formData.ifsc_code} onChange={handleChange} required autoComplete="off" />
             </div>
           </div>
 

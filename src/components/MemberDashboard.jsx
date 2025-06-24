@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { UserPlus, FileText, Clock, CalendarDays } from "lucide-react";
+import { UserPlus, FileText, CalendarDays } from "lucide-react";
 import { useAuth } from '../context/AuthContext';
 import './MemberDashboard.css';  // You can create the CSS file based on your previous style
 
@@ -19,13 +19,7 @@ function MemberDashboard() {
       link: "/onboard-desk",
       color: "bg-light",
     },
-    {
-      title: "Timesheet",
-      description: "Fill and submit your timesheets.",
-      icon: <Clock className="text-success" size={40} />,  // Green
-      link: "/member/timesheet",
-      color: "bg-light",
-    },
+    
     {
       title: "Payslips",
       description: "View and download your payslips.",

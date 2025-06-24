@@ -19,7 +19,7 @@ function Login() {
     try {
       await signInWithEmailAndPassword(auth, email, password);
       toast.success('Login Successful!', {
-        position: "bottom-right",
+        position: "top-right",
         autoClose: 2000,
         theme: "light",
       });
@@ -29,7 +29,7 @@ function Login() {
     } catch (error) {
       console.error('Firebase Login Error:', error);
       toast.error('Login failed: ' + error.message, {
-        position: "bottom-right",
+        position: "top-right",
         autoClose: 3000,
         theme: "colored",
       });

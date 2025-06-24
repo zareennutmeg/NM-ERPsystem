@@ -6,7 +6,9 @@ import uploadCertificateRouter from './uploadCertificate.js';
 const app = express();
 const PORT = 5000;
 
-app.use(cors());
+app.use(cors({
+  origin: 'http://13.48.244.216'
+}));
 app.use(express.json());
 // Mount email service routes at /api/email
 app.use('/api/email', emailServiceRouter);

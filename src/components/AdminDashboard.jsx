@@ -1,17 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { UserPlus } from "lucide-react"; 
+import { UserPlus, Clock, CalendarDays } from "lucide-react";
 import './AdminDashboard.css';
 
 const adminModules = [
   {
-    title: "OnBoardDesk",
-    description: "Manage new member registration and documents.",
-    icon: <UserPlus className="h-10 w-10 text-nutmeg-600" />,
-    link: "/onboard-desk",
-    color: "bg-nutmeg-50",
-  }
+        title: "OnBoardDesk",
+        description: "Manage your onboarding documents.",
+        icon: <UserPlus className="text-primary" size={40} />,  // Blue
+        link: "/onboard-desk",
+        color: "bg-light",
+      },
+  {
+        title: "Timesheet",
+        description: "Fill and submit your timesheets.",
+        icon: <Clock className="text-success" size={40} />,  // Green
+        link: "/admin/timesheet",
+        color: "bg-light",
+      },
+      
+      {
+        title: "Leave",
+        description: "Apply for leave and check leave status.",
+        icon: <CalendarDays className="text-danger" size={40} />,  // Red
+        link: "/admin/leave",
+        color: "bg-light",
+      }
 ];
 
 function AdminDashboard() {
