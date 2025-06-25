@@ -1,16 +1,18 @@
-import React from 'react';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import AdminDashboard from '../components/AdminDashboard';
-import MemberDashboard from '../components/MemberDashboard';
 
 export default function Dashboard() {
   const { role } = useAuth();
+  const navigate = useNavigate();
 
-  return (
-    <>
-      {role === 'admin' && <AdminDashboard />}
-      {role === 'member' && <MemberDashboard />}
-      {!role && <div>Unauthorized</div>}
-    </>
-  );
+  useEffect(() => {
+    if (role === 'admin') {
+      navigate('/admin');
+    } else if (role === 'member') {
+      navigate('/member');
+    }
+  }, [role, navigate]);
+
+  return <div>Loading your dashboard...</div>;
 }

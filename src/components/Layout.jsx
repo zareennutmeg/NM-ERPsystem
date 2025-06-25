@@ -25,11 +25,11 @@ const Layout = () => {
 
   const adminMenu = [
     { path: "/admin", label: "Dashboard", icon: <FaTachometerAlt className="me-2" /> },
-    { path: "/onboard-desk", label: "Onboard Desk", icon: <FaUserPlus className="me-2" /> }
+    { path: "admin/onboard-desk", label: "Onboard Desk", icon: <FaUserPlus className="me-2" /> }
   ];
   const memberMenu = [
     { path: "/member", label: "Dashboard", icon: <FaTachometerAlt className="me-2" /> },
-    { path: "/onboard-desk", label: "Onboard Desk", icon: <FaUserPlus className="me-2" /> }
+    { path: "member/onboard-desk", label: "Onboard Desk", icon: <FaUserPlus className="me-2" /> }
   ];
   const menu = user.role === "admin" ? adminMenu : memberMenu;
 

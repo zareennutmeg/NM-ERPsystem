@@ -62,7 +62,7 @@ function Login() {
                 id="email"
                 type="email"
                 className="form-control"
-                placeholder="name@nmsolutions.co.in"
+                placeholder="Enter Your mail ID"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required

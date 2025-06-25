@@ -8,6 +8,9 @@ import Dashboard from './pages/Dashboard';
 import AdminDashboard from './components/AdminDashboard';
 import MemberDashboard from './components/MemberDashboard';
 import MemberOnboarding from './pages/MemberOnboarding';
+//import Payslips from './pages/Payslips';
+//import LeaveModule from './pages/LeaveModule';
+
 
 function App() {
   const [role, setRole] = useState(null);
@@ -25,8 +28,10 @@ function App() {
         <Route path="/*" element={<Layout role={role} />} >
             <Route index element={<Dashboard role={role} />} />
             <Route path="admin" element={<AdminDashboard />} />
+            <Route path="admin/onboard-desk" element={<MemberOnboarding />} />
           <Route path="member" element={<MemberDashboard />} />
-          <Route path="onboard-desk" element={<MemberOnboarding />} />
+         <Route path="member/onboard-desk" element={<MemberOnboarding />} />
+         
         </Route>
 
         {/* Fallback redirect */}

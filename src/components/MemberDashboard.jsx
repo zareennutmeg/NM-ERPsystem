@@ -16,7 +16,7 @@ function MemberDashboard() {
       title: "OnBoardDesk",
       description: "Manage your onboarding documents.",
       icon: <UserPlus className="text-primary" size={40} />,  // Blue
-      link: "/onboard-desk",
+      link: "/member/onboard-desk",
       color: "bg-light",
     },
     
