@@ -36,6 +36,12 @@ function MemberDashboard() {
     }
   ];
   useEffect(() => {
+    if (!user || role !== 'member') {
+      navigate('/login');
+    }
+  }, [user, role, navigate]);
+
+  useEffect(() => {
     axios.get('http://13.48.244.216:5000/api/message')
       .then(res => setMessage(res.data.message))
       .catch(() => setMessage('Error fetching message'));

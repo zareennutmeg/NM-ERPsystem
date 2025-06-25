@@ -11,31 +11,26 @@ import MemberOnboarding from './pages/MemberOnboarding';
 //import Payslips from './pages/Payslips';
 //import LeaveModule from './pages/LeaveModule';
 
-
 function App() {
-  const [role, setRole] = useState(null);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
   return (
     <Router>
       <Routes>
-       <Route path="/" element={<Navigate to="/login" />} />
-       <Route path="/login" element={<Login />} />
+        {/* Public Routes */}
+        <Route path="/" element={<Navigate to="/login" />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/otp" element={<OtpPage />} />
 
-        <Route path="/otp" element={<OtpPage setRole={setRole} setIsAuthenticated={setIsAuthenticated} />} />
-
-        {/* No PrivateRoute, just render Layout directly */}
-        <Route path="/*" element={<Layout role={role} />} >
-            <Route index element={<Dashboard role={role} />} />
-            <Route path="admin" element={<AdminDashboard />} />
-            <Route path="admin/onboard-desk" element={<MemberOnboarding />} />
+        {/* Protected Routes wrapped in Layout with Sidebar */}
+        <Route path="/*" element={<Layout />}>
+          <Route index element={<Dashboard />} /> {/* Automatically redirects based on role */}
+          <Route path="admin" element={<AdminDashboard />} />
+          <Route path="admin/onboard-desk" element={<MemberOnboarding />} />
           <Route path="member" element={<MemberDashboard />} />
-         <Route path="member/onboard-desk" element={<MemberOnboarding />} />
-         
+          <Route path="member/onboard-desk" element={<MemberOnboarding />} />
         </Route>
 
-        {/* Fallback redirect */}
+        {/* Catch-all Fallback */}
         <Route path="*" element={<Navigate to="/login" />} />
       </Routes>
     </Router>

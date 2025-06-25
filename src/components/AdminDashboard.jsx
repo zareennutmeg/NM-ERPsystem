@@ -2,8 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { UserPlus, Clock, CalendarDays } from "lucide-react";
+import { useAuth } from '../context/AuthContext'; 
 import './AdminDashboard.css';
 
+function AdminDashboard() {
+  const [message, setMessage] = useState('');
+  const navigate = useNavigate(); // for routing
+  const { user, role } = useAuth();
+  
 const adminModules = [
   {
         title: "OnBoardDesk",
@@ -28,11 +34,12 @@ const adminModules = [
         color: "bg-light",
       }
 ];
-
-function AdminDashboard() {
-  const [message, setMessage] = useState('');
-  const navigate = useNavigate(); // for routing
-
+ 
+ useEffect(() => {
+    if (!user || role !== 'admin') {
+      navigate('/login');
+    }
+  }, [user, role, navigate]);
   useEffect(() => {
     axios.get('http://13.48.244.216:5000/api/message')
       .then(res => setMessage(res.data.message))

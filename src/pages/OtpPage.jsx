@@ -12,24 +12,13 @@ function OtpPage() {
   const { user, role, otpVerified, setOtpVerified } = useAuth();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!user) {
-      navigate('/login');
-    }
-  }, [user, navigate]);
+ 
 
-  // After OTP verified and role fetched, navigate to dashboard
   useEffect(() => {
-    if (otpVerified && role) {
-      if (role === 'admin') {
-        navigate('/admin-dashboard');
-      } else if (role === 'member') {
-        navigate('/member-dashboard');
-      } else {
-        navigate('/');
-      }
-    }
-  }, [otpVerified, role, navigate]);
+  if (otpVerified && role) {
+    navigate('/');
+  }
+}, [otpVerified, role, navigate]);
 
   const sendOtp = async () => {
     try {
