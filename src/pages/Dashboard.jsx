@@ -6,13 +6,15 @@ export default function Dashboard() {
   const { role } = useAuth();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (role === 'admin') {
+   useEffect(() => {
+    if (!user) {
+      navigate('/login');  // Redirect if not logged in
+    } else if (role === 'admin') {
       navigate('/admin');
     } else if (role === 'member') {
       navigate('/member');
     }
-  }, [role, navigate]);
+  }, [role, user, navigate]);
 
   return <div>Loading your dashboard...</div>;
 }

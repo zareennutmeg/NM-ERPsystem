@@ -52,7 +52,7 @@ function Login() {
   <div className="card-body">
     <h2 className="h4 mb-3">Sign In</h2>
     <p className="text-secondary mb-4">
-      Please sign in with your NutMeg official email
+      Please sign in with your official email ID
     </p>
 
           <form onSubmit={handleLogin}>
