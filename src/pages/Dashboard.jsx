@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 export default function Dashboard() {
-  const { role } = useAuth();
+  const { role, user } = useAuth();
   const navigate = useNavigate();
 
    useEffect(() => {
