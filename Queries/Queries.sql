@@ -27,6 +27,10 @@ CREATE TABLE "TPPL"."TPPL_member_certificates" (
 
 
 
+ALTER TABLE "TPPL"."TPPL_members"
+ADD CONSTRAINT valid_email_format CHECK (
+  email ~* '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+);
 
 
 
@@ -57,3 +61,5 @@ ALTER TABLE "TPPL"."TPPL_members"
 ADD CONSTRAINT ifsc_code_alphanumeric_20
 CHECK (ifsc_code ~ '^[A-Za-z0-9]{1,20}$');
 
+ALTER TABLE "TPPL"."TPPL_members"
+ADD CONSTRAINT age_range CHECK (age >= 21 AND age <= 60);

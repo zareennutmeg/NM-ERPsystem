@@ -24,9 +24,9 @@ function App() {
         {/* Protected Routes wrapped in Layout with Sidebar */}
         <Route path="/*" element={<Layout />}>
           <Route index element={<Dashboard />} /> {/* Automatically redirects based on role */}
-          <Route path="admin" element={<AdminDashboard />} />
+          <Route path="admin/*" element={<AdminDashboard />} />
           <Route path="admin/onboard-desk" element={<MemberOnboarding />} />
-          <Route path="member" element={<MemberDashboard />} />
+          <Route path="member/*" element={<MemberDashboard />} />
           <Route path="member/onboard-desk" element={<MemberOnboarding />} />
         </Route>
 

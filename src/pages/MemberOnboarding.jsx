@@ -90,7 +90,7 @@ const MemberOnboarding = () => {
     }
   };
   const validateEmail = (email) => {
-  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}$/;
   return emailRegex.test(email);
 };
 
@@ -101,9 +101,9 @@ const validateForm = (data) => {
     errors.push("Name must be alphabetic and up to 50 characters.");
   }
 
-  if (!(data.age >= 1 && data.age <= 60)) {
-    errors.push("Age must be between 1 and 60.");
-  }
+  if (!(data.age >= 21 && data.age <= 60)) {
+  errors.push("Age must be between 21 and 60.");
+}
 
   if (!/^[A-Za-z\s]{1,50}$/.test(data.designation)) {
     errors.push("Designation must be alphabetic and up to 50 characters.");
@@ -200,7 +200,9 @@ const validationErrors = validateForm(formData);
             </div>
             <div className="col-md-6">
               <label className="form-label">Age</label>
-              <input type="number" className="form-control" name="age" value={formData.age} onChange={handleChange} required  />
+              <input type="number" className="form-control" name="age" value={formData.age} onChange={handleChange} required  
+              min={21}
+               max={60} />
             </div>
             <div className="col-md-6">
               <label className="form-label">Gender</label>
