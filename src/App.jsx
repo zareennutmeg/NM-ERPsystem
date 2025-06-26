@@ -8,6 +8,9 @@ import Dashboard from './pages/Dashboard';
 import AdminDashboard from './components/AdminDashboard';
 import MemberDashboard from './components/MemberDashboard';
 import MemberOnboarding from './pages/MemberOnboarding';
+import TimesheetView from './components/timesheet/TimesheetView';
+import AdminTimesheet from './components/timesheet/AdminTimesheet';
+
 //import Payslips from './pages/Payslips';
 //import LeaveModule from './pages/LeaveModule';
 
@@ -26,8 +29,10 @@ function App() {
           <Route index element={<Dashboard />} /> {/* Automatically redirects based on role */}
           <Route path="admin/*" element={<AdminDashboard />} />
           <Route path="admin/onboard-desk" element={<MemberOnboarding />} />
+          <Route path="admin/timesheet" element={<AdminTimesheet />} />
           <Route path="member/*" element={<MemberDashboard />} />
           <Route path="member/onboard-desk" element={<MemberOnboarding />} />
+            <Route path="member/timesheet" element={<TimesheetView />} />
         </Route>
 
         {/* Catch-all Fallback */}
